@@ -1,0 +1,144 @@
+<div class="auth-container">
+  <div class="auth-card">
+    <h1>Kullanıcı Girişi</h1>
+    
+    <% if flash[:error] %>
+      <div class="alert alert-error">
+        <%= flash[:error] %>
+      </div>
+    <% end %>
+    
+    <%= form_with url: login_path, method: :post, local: true, class: "auth-form" do |form| %>
+      <div class="form-group">
+        <%= form.label :email, "Email:" %>
+        <%= form.email_field :email, placeholder: "ornek@email.com", required: true %>
+      </div>
+      
+      <div class="form-group">
+        <%= form.label :password, "Şifre:" %>
+        <%= form.password_field :password, placeholder: "Şifrenizi girin", required: true %>
+      </div>
+      
+      <div class="form-actions">
+        <%= form.submit "Giriş Yap", class: "btn btn-primary" %>
+      </div>
+    <% end %>
+    
+    <div class="auth-links">
+      <p>Hesabınız yok mu? <%= link_to "Yeni hesap oluştur", signup_path, class: "link" %></p>
+    </div>
+  </div>
+</div>
+
+<style>
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: white;
+  padding: 20px;
+}
+
+.auth-card {
+  background: white;
+  padding: 40px;
+  border: 2px solid #22c55e;
+  border-radius: 15px;
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.auth-card h1 {
+  color: #15803d;
+  margin-bottom: 30px;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.auth-form {
+  text-align: left;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.form-group label {
+  display: block;
+  margin-bottom: 8px;
+  color: #15803d;
+  font-weight: bold;
+}
+
+.form-group input {
+  width: 100%;
+  padding: 12px 15px;
+  border: 1px solid #22c55e;
+  border-radius: 8px;
+  font-size: 16px;
+  box-sizing: border-box;
+}
+
+.form-group input:focus {
+  outline: none;
+  border-color: #16a34a;
+  background: #f0fdf4;
+}
+
+.form-actions {
+  margin-top: 30px;
+}
+
+.btn {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #22c55e;
+  border-radius: 8px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.btn-primary {
+  background: #22c55e;
+  color: white;
+}
+
+.btn-primary:hover {
+  background: #16a34a;
+}
+
+.auth-links {
+  margin-top: 25px;
+  padding-top: 20px;
+  border-top: 1px solid #22c55e;
+}
+
+.auth-links p {
+  margin: 0;
+  color: #15803d;
+}
+
+.link {
+  color: #15803d;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
+
+.alert {
+  padding: 12px 15px;
+  margin-bottom: 20px;
+  border: 1px solid #22c55e;
+}
+
+.alert-error {
+  background: #f0fdf4;
+  color: #15803d;
+}
+</style>

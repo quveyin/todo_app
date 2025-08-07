@@ -1,0 +1,62 @@
+<div class="header">
+  <div class="header-left">
+    <h1><%= @page_title %></h1>
+    <p class="welcome-text">Hoş geldiniz, <%= current_user.name %>! </p>
+  </div>
+  <div class="header-right">
+    <%= link_to 'Yeni Görev Ekle', new_task_path, class: 'btn btn-primary' %>
+    <%= link_to 'Çıkış Yap', logout_path, data: { turbo_method: :delete, turbo_confirm: 'Çıkış yapmak istediğinizden emin misiniz?' }, class: 'btn btn-secondary' %>
+  </div>
+</div>
+
+<div class="stats">
+  <%= link_to tasks_path, class: "stat #{'active' if @filter.nil?}" do %>
+    Toplam: <%= @all_tasks.count %>
+  <% end %>
+  <%= link_to tasks_path(filter: 'pending'), class: "stat pending #{'active' if @filter == 'pending'}" do %>
+    Bekleyen: <%= @pending_tasks.count %>
+  <% end %>
+  <%= link_to tasks_path(filter: 'completed'), class: "stat completed #{'active' if @filter == 'completed'}" do %>
+    Tamamlanan: <%= @completed_tasks.count %>
+  <% end %>
+</div>
+
+<% if @tasks.any? %>
+  <div class="tasks-container">
+    <% @tasks.each do |task| %>
+      <div class="task-card <%= 'completed' if task.completed %>">
+        <div class="task-content">
+          <h3 class="task-title"><%= task.title %></h3>
+          <span class="task-status <%= task.completed ? 'completed' : 'pending' %>">
+            <%= task.status %>
+          </span>
+          <div class="task-dates">
+            <small class="task-date">
+              <strong>Oluşturulma:</strong> <%= task.created_at.strftime("%d.%m.%Y %H:%M") %>
+            </small>
+            <% if task.completed && task.updated_at != task.created_at %>
+              <small class="task-date completed-date">
+                <strong>Tamamlanma:</strong> <%= task.updated_at.strftime("%d.%m.%Y %H:%M") %>
+              </small>
+            <% end %>
+          </div>
+        </div>
+        
+        <div class="task-actions">
+          <%= link_to toggle_task_path(task), data: { turbo_method: :patch }, class: 'btn btn-toggle' do %>
+            <%= task.completed ? 'Geri Al' : 'Tamamla' %>
+          <% end %>
+          <%= link_to 'Düzenle', edit_task_path(task), class: 'btn btn-edit' %>
+          <%= link_to 'Sil', task, 
+                      class: 'btn btn-delete', 
+                      data: { turbo_method: :delete, turbo_confirm: 'Bu görevi silmek istediğinizden emin misiniz?' } %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+<% else %>
+  <div class="empty-state">
+    <p>Henüz görev eklenmemiş.</p>
+    <%= link_to 'İlk görevini ekle', new_task_path, class: 'btn btn-primary' %>
+  </div>
+<% end %>

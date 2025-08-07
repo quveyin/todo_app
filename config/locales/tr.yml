@@ -1,0 +1,31 @@
+tr:
+  activerecord:
+    models:
+      task: "Görev"
+    attributes:
+      task:
+        title: "Başlık"
+        completed: "Tamamlandı"
+    errors:
+      models:
+        task:
+          attributes:
+            title:
+              blank: "boş bırakılamaz"
+              too_short: "çok kısa (en az %{count} karakter olmalı)"
+              too_long: "çok uzun (en fazla %{count} karakter olmalı)"
+            completed:
+              inclusion: "geçerli bir değer değil"
+  errors:
+    messages:
+      blank: "boş bırakılamaz"
+      too_short: "çok kısa (en az %{count} karakter olmalı)"
+      too_long: "çok uzun (en fazla %{count} karakter olmalı)"
+      inclusion: "listede bulunmuyor"
+      invalid: "geçersiz"
+      taken: "daha önce kullanılmış"
+      not_a_number: "bir sayı değil"
+      greater_than: "%{count} değerinden büyük olmalı"
+      greater_than_or_equal_to: "%{count} değerinden büyük veya eşit olmalı"
+      less_than: "%{count} değerinden küçük olmalı"
+      less_than_or_equal_to: "%{count} değerinden küçük veya eşit olmalı"
