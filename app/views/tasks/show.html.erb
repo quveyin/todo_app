@@ -20,7 +20,7 @@
     
     <div class="task-actions">
       <%= link_to toggle_task_path(@task), data: { turbo_method: :patch }, class: 'btn btn-toggle' do %>
-        <%= @task.completed ? '↶ Geri Al' : '✓ Tamamla' %>
+        <%= @task.completed ? 'Geri Al' : 'Tamamla' %>
       <% end %>
       <%= link_to 'Düzenle', edit_task_path(@task), class: 'btn btn-edit' %>
       <%= link_to 'Sil', @task, 
@@ -31,5 +31,5 @@
 </div>
 
 <div class="back-link">
-  <%= link_to '← Görev Listesi', tasks_path, class: 'btn btn-link' %>
+  <%= link_to 'Görev Listesi', tasks_path, class: 'btn btn-link' %>
 </div>
