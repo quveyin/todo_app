@@ -3,61 +3,46 @@ class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy, :toggle]
   
   def index
-    @filter = params[:filter]
-    
-    case @filter
+    case params[:filter]
     when 'completed'
       @tasks = current_user.tasks.completed.recent
-      @page_title = 'Tamamlanan Görevler'
     when 'pending'
       @tasks = current_user.tasks.pending.recent
-      @page_title = 'Bekleyen Görevler'
     else
       @tasks = current_user.tasks.recent
-      @page_title = 'Tüm Görevler'
     end
-    
-    @all_tasks = current_user.tasks
-    @completed_tasks = @all_tasks.completed
-    @pending_tasks = @all_tasks.pending
-  end
-
-  def show
   end
 
   def new
     @task = current_user.tasks.build
   end
 
-  def edit
-  end
-
   def create
     @task = current_user.tasks.build(task_params)
     
     if @task.save
-      redirect_to tasks_path, notice: 'Görev başarıyla oluşturuldu.'
+      redirect_to tasks_path
     else
-      render :new, status: :unprocessable_entity
+      render :new
     end
   end
 
   def update
     if @task.update(task_params)
-      redirect_to tasks_path, notice: 'Görev başarıyla güncellendi.'
+      redirect_to tasks_path
     else
-      render :edit, status: :unprocessable_entity
+      render :edit
     end
   end
 
   def toggle
     @task.toggle_completion!
-    redirect_to tasks_path, notice: "Görev durumu değiştirildi: #{@task.status}"
+    redirect_to tasks_path
   end
 
   def destroy
     @task.destroy
-    redirect_to tasks_path, notice: 'Görev başarıyla silindi.'
+    redirect_to tasks_path
   end
 
   private

@@ -9,10 +9,8 @@ class UsersController < ApplicationController
     
     if @user.save
       session[:user_id] = @user.id
-      flash[:success] = "Hesabınız başarıyla oluşturuldu! Hoş geldiniz, #{@user.name}!"
       redirect_to tasks_path
     else
-      flash.now[:error] = 'Hesap oluşturulurken hata oluştu'
       render :new
     end
   end
